@@ -6,45 +6,42 @@ from dash import dcc
 import plotly.graph_objs as go
 
 ########### Define your variables
-beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
-ibu_values=[35, 60, 85, 75]
-abv_values=[5.4, 7.1, 9.2, 4.3]
-color1='darkred'
-color2='orange'
-mytitle='Beer Comparison'
+weeks=[1,2,3,4,5,6]
+confusion_values=[99, 90, 80, 60, 50, 40]
+knowledge_values=[0, 5, 15, 5, 25, 45]
+color1='red'
+color2='green'
+mytitle='Daniels Data Science Journey'
 
-label1='IBU'
-label2='ABV'
+label1='Confusion'
+label2='Coding knowledge'
 
 ########### Set up the chart
 
-def make_that_cool_barchart(beers, ibu_values, abv_values, color1, color2, mytitle):
-    bitterness = go.Bar(
-        x=beers,
-        y=ibu_values,
-        name=label1,
-        marker={'color':color1}
-    )
-    alcohol = go.Bar(
-        x=beers,
-        y=abv_values,
-        name=label2,
-        marker={'color':color2}
-    )
 
-    beer_data = [bitterness, alcohol]
-    beer_layout = go.Layout(
-        barmode='group',
-        title = mytitle
-    )
 
-    beer_fig = go.Figure(data=beer_data, layout=beer_layout)
-    return beer_fig
+# create the data trace
+def make_that_cool_linechart(weeks, confusion_values, knowledge_values, color1, color2, mytitle):
+    confusion =go.Scatter(x=weeks,
+                      y=confusion_values,
+                      mode = 'lines',
+                      marker={'color':color1},
+                      name = 'confusion')
+    knowledge =go.Scatter(x=weeks,
+                      y=knowledge_values,
+                      mode = 'lines',
+                      marker={'color':color2},
+                      name = 'knowledge')
+
+    # combine into a figure
+    coding_fig = go.Figure([confusion, knowledge])
+    coding_fig
+    return coding_fig
 
 
 ######### Run the function #######
 
 if __name__ == '__main__':
-    fig = make_that_cool_barchart(beers, ibu_values, abv_values, color1, color2, mytitle)
-    fig.write_html('docs/barchart.html')
+    fig = make_that_cool_linechart(weeks, confusion_values, knowledge_values, color1, color2, mytitle)
+    fig.write_html('docs/barchart_v2.html')
     print('We successfully updated the barchart!')
